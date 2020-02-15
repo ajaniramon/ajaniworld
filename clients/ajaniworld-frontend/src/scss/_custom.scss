@@ -1,0 +1,8 @@
+// Chapuza datatables
+input[type=search]{
+  @extend .form-control
+}
+
+.dataTables_length select{
+  @extend .form-control
+}

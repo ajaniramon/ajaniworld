@@ -1,0 +1,82 @@
+<ngx-spinner bdOpacity=0.4 bdColor="rgba(51,51,51,0.34)" size="small" color="#fff" type="ball-spin" [fullScreen]="true">
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>
+
+<div>
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-align-justify"></i>
+      Users
+    </div>
+    <div class="card-body">
+      <div class="text-left">
+        <button type="button" class="btn btn-success" (click)="createUser()"><i class="icon-plus"></i> New</button>
+      </div>
+      <br />
+      <br />
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table striped">
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Roles</th>
+            <th>Name</th>
+            <th>Surnames</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>
+              <img *ngIf="user.avatar" class="img-avatar" src="{{'data:image/png;base64,' + user.avatar}}" />
+              <img *ngIf="!user.avatar" class="img-avatar" src="../../../../assets/img/avatars/avatar-placeholder.png"/>
+              {{user.code}}
+            </td>
+            <td>
+              <div *ngFor="let role of user.roles">
+                <span [attr.class]="role.name == 'ADMIN' ? 'badge badge-danger' : 'badge badge-success'">
+                  <i *ngIf="role.name == 'ADMIN'" class="fa fa-diamond"></i>
+                  <i *ngIf="role.name == 'USER'" class="fa fa-user"></i>
+                  {{role.description}}
+                </span>
+              </div>
+            </td>
+            <td>
+              {{user.name}}
+            </td>
+            <td>
+              {{user.surnames}}
+            </td>
+            <td>
+              {{user.email}}
+            </td>
+            <td>
+              {{user.phone}}
+            </td>
+            <td>
+              <button type="button" class="btn btn-danger"
+                (click)="openDeleteModal(content, user.id, user.name)"><i class="icon-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Are you sure to remove the user {{userCode}}?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-info" (click)="modal.close()">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="deleteUser()">Delete</button>
+  </div>
+</ng-template>

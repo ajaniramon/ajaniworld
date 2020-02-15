@@ -1,0 +1,17 @@
+Proposes of this application:
+    - Finish the API of Coliving
+
+General:
+    - Create a global exception handler
+    - Enable logging (honeycomb?)
+    - Dockerize this crap 50%
+    - Get a Ubuntu Server VM and install Jenkins and Docker on it
+    - Automate building, deploying and testing with Jenkins
+    - Do some TDD and have all my classes tested
+    - Install SonarQube and try to have my code as clean and fine as possible
+    - Enable security and create a matrix of roles
+    - Use JWT for authentication
+
+When I decide to use a database:
+    - Add H2 as default persistence system for testing
+    - Enable auto creation of tables for testing with sample data
