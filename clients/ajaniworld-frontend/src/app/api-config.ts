@@ -1,3 +1,3 @@
 export class ApiConfig {
-  public static readonly baseUrl: String = 'http://localhost:8000';
+  public static readonly baseUrl: String = process.env.AJANIWORLD_API_BASEURL;
 }

@@ -1,0 +1,30 @@
+version: '3.4'
+
+services: 
+  ajaniworld-api:
+    build:
+        context: ./services/ajaniworld-api
+        dockerfile: Dockerfile
+    image: ajaniworld/api
+    ports:
+      - 8000:8000
+    environment:
+      - AJANIWORLD_DB_HOST=${AJANIWORLD_DB_HOST}
+      - AJANIWORLD_DB_USER=${AJANIWORLD_DB_USER}
+      - AJANIWORLD_DB_PASSWORD=${AJANIWORLD_DB_PASSWORD}
+      - AJANIWORLD_BEELINE_DATASET=${AJANIWORLD_BEELINE_DATASET}
+      - AJANIWORLD_BEELINE_WRITE_KEY=${AJANIWORLD_BEELINE_WRITE_KEY}
+      - SPRING_PROFILES_ACTIVE=integration
+    container_name: ajaniworld-api
+  ajaniworld-frontend:
+    build:
+      context: ./clients/ajaniworld-frontend
+      dockerfile: Dockerfile
+    image: ajaniworld/frontend
+    depends_on: 
+      - ajaniworld-api
+    ports:
+      - 80:4200
+    environment:
+      - AJANIWORLD_API_BASEURL=${AJANIWORLD_API_BASEURL}
+    container_name: ajaniworld-frontend
