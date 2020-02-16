@@ -78,5 +78,3 @@ out/
 .vscode/
 
 .env
-services/ajaniworld-api/src/main/resources/application-production.properties
-services/ajaniworld-api/src/main/resources/application-integration.properties
