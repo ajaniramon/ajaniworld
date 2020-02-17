@@ -42,7 +42,7 @@ class JWTFactory {
                 .setClaims(claims)
                 .setSubject(this.code)
                 .setExpiration(Date(Date().time + TimeUnit.HOURS.toMillis(expiration)))
-                .signWith(SignatureAlgorithm.HS256, System.getenv(Constants.SUPER_SECRET_JWT_PROPERTY)).compact()
+                .signWith(SignatureAlgorithm.HS256, jwtSecret).compact()
     }
 
     fun addAuthentication(response: HttpServletResponse, user: User) {
@@ -79,7 +79,7 @@ class JWTFactory {
 
             try{
                 val tokenBody = Jwts.parser()
-                        .setSigningKey(System.getenv(Constants.SUPER_SECRET_JWT_PROPERTY))
+                        .setSigningKey(jwtSecret)
                         .parseClaimsJws(token)
                         .body
 
