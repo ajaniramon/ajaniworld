@@ -5,18 +5,13 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import es.heathcliff.ajaniworld.domain.model.User
 import es.heathcliff.ajaniworld.model.AccountCredentials
 import es.heathcliff.ajaniworld.security.AjaniAuthenticationManager
-import es.heathcliff.ajaniworld.security.SecurityUserDetails
-import es.heathcliff.ajaniworld.security.UserSecurityService
 import es.heathcliff.ajaniworld.service.UserService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
-import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
-import org.springframework.stereotype.Service
 import org.springframework.web.cors.CorsUtils
 import java.io.IOException
 import javax.naming.AuthenticationException
@@ -25,7 +20,9 @@ import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-class JWTLoginFilter internal constructor(private var s: String, private var userService: UserService) : AbstractAuthenticationProcessingFilter(AntPathRequestMatcher(s)) {
+class JWTLoginFilter internal constructor(private var s: String, private var userService: UserService,
+                                          private var jwtFactory: JWTFactory)
+    : AbstractAuthenticationProcessingFilter(AntPathRequestMatcher(s)) {
     init {
         authenticationManager = AjaniAuthenticationManager(userService)
     }
@@ -59,11 +56,11 @@ class JWTLoginFilter internal constructor(private var s: String, private var use
     @Throws(IOException::class, ServletException::class)
     override fun successfulAuthentication(req: HttpServletRequest,
                                           res: HttpServletResponse, chain: FilterChain?, auth: Authentication) {
-        JWTUtils.addAuthentication(res, (auth.principal as User))
+        jwtFactory.addAuthentication(res, (auth.principal as User))
     }
 
     @Throws(IOException::class, ServletException::class)
     override fun unsuccessfulAuthentication(request: HttpServletRequest, response: HttpServletResponse, failed: org.springframework.security.core.AuthenticationException?) {
-        JWTUtils.addUnsuccessfulAuthentication(response)
+        jwtFactory.addUnsuccessfulAuthentication(response)
     }
 }

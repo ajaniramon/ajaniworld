@@ -8,35 +8,41 @@ import es.heathcliff.ajaniworld.security.SecurityUserDetails
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.stereotype.Service
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import kotlin.collections.HashMap
 
-internal object JWTUtils {
+@Service
+class JWTFactory {
     private val expiration: Long = 100L
     private val header = "Authorization"
     private val objectMapper: ObjectMapper = ObjectMapper()
+
+    @Value("\${ajaniworld.security.jwtSecret}")
+    private lateinit var jwtSecret : String
 
     fun User.createJwt(): String {
         val claims = HashMap<String, Any>()
 
         // Add more claims if necessary
         claims.put("roles", this.roles.map { role -> role.name }.toList())
-        claims.put("id",this.id)
+        claims.put("id", this.id)
 
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(this.code)
                 .setExpiration(Date(Date().time + TimeUnit.HOURS.toMillis(expiration)))
-                .signWith(SignatureAlgorithm.HS256, Constants.SUPER_SECRET_JWT_KEY).compact()
+                .signWith(SignatureAlgorithm.HS256, System.getenv(Constants.SUPER_SECRET_JWT_PROPERTY)).compact()
     }
 
     fun addAuthentication(response: HttpServletResponse, user: User) {
@@ -73,7 +79,7 @@ internal object JWTUtils {
 
             try{
                 val tokenBody = Jwts.parser()
-                        .setSigningKey(Constants.SUPER_SECRET_JWT_KEY)
+                        .setSigningKey(System.getenv(Constants.SUPER_SECRET_JWT_PROPERTY))
                         .parseClaimsJws(token)
                         .body
 

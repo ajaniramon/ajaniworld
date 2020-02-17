@@ -2,7 +2,7 @@ package es.heathcliff.ajaniworld.constants
 
 object Constants{
     const val LOG_INFO : String = "log_info"
-    const val SUPER_SECRET_JWT_KEY = "mecagoentusmuertoschafadosenelsueloensietecanales"
+    const val SUPER_SECRET_JWT_PROPERTY = "AJANIWORLD_JWT_SECRET"
     const val ADMIN_ROLE_NAME = "ADMIN"
     const val USER_ROLE_NAME = "USER"
 

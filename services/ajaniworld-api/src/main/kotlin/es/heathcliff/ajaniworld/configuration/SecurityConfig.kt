@@ -1,6 +1,7 @@
 package es.heathcliff.ajaniworld.configuration
 
 import es.heathcliff.ajaniworld.jwt.JWTAuthenticationFilter
+import es.heathcliff.ajaniworld.jwt.JWTFactory
 import es.heathcliff.ajaniworld.jwt.JWTLoginFilter
 import es.heathcliff.ajaniworld.security.AjaniAuthenticationManager
 import es.heathcliff.ajaniworld.security.UserSecurityService
@@ -26,7 +27,8 @@ import org.springframework.security.config.BeanIds
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-class SecurityConfig(private var userService: UserService, private var userSecurityService: UserSecurityService) : WebSecurityConfigurerAdapter() {
+class SecurityConfig(private var userService: UserService, private var userSecurityService: UserSecurityService,
+                     private var jwtFactory: JWTFactory) : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
                 .cors()
@@ -39,13 +41,13 @@ class SecurityConfig(private var userService: UserService, private var userSecur
                 .and()
                 .addFilterBefore(jwtLoginFilter(userService),
                         UsernamePasswordAuthenticationFilter::class.java)
-                .addFilterBefore(JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
+                .addFilterBefore(JWTAuthenticationFilter(jwtFactory), UsernamePasswordAuthenticationFilter::class.java)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }
 
     @Bean
     fun jwtLoginFilter(userService: UserService) : JWTLoginFilter{
-        return JWTLoginFilter("/login", userService)
+        return JWTLoginFilter("/login", userService, jwtFactory)
     }
 
     override fun configure(web: WebSecurity?) {
