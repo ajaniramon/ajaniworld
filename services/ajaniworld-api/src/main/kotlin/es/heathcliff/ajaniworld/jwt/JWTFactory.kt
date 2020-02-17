@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import es.heathcliff.ajaniworld.constants.Constants
 import es.heathcliff.ajaniworld.domain.model.User
 import es.heathcliff.ajaniworld.model.LoginResult
-import es.heathcliff.ajaniworld.security.SecurityUserDetails
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
