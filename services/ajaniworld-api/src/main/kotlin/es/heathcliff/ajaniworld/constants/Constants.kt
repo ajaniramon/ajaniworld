@@ -2,7 +2,6 @@ package es.heathcliff.ajaniworld.constants
 
 object Constants{
     const val LOG_INFO : String = "log_info"
-    const val SUPER_SECRET_JWT_PROPERTY = "AJANIWORLD_JWT_SECRET"
     const val ADMIN_ROLE_NAME = "ADMIN"
     const val USER_ROLE_NAME = "USER"
 
@@ -16,4 +15,6 @@ object Constants{
     const val ERROR_ALREADY_EXISTS = "Already exists"
     const val ERROR_HAS_STATES = "Has states"
     const val ERROR_MAX_SIZE_EXCEEDED = "Max size exceeded"
+
+    const val AJANIWORLD_DEFAULT_S3_BUCKET = "ajani-world"
 }

@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
+	implementation("com.amazonaws:aws-java-sdk-s3:1.11.723")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
