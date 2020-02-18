@@ -24,6 +24,7 @@ class S3StorageController(private var s3StorageService: S3StorageService,
     @GetMapping("/items")
     fun getObject(@RequestParam key: String) = s3StorageService.getObject(key)
 
+    @PreAuthorize(SecurityPolicies.ALLOW_ONLY_ADMIN)
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/items")
     fun putObject(@RequestBody storageItemCreation: StorageItemCreation){
