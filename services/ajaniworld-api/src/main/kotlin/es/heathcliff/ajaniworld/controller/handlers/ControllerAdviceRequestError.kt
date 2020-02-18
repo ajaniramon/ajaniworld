@@ -1,6 +1,7 @@
 package es.heathcliff.ajaniworld.controller.handlers
 
 import es.heathcliff.ajaniworld.exception.ColivingException
+import es.heathcliff.ajaniworld.exception.StorageItemNotExistsException
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -24,6 +25,12 @@ class ControllerAdviceRequestError : ResponseEntityExceptionHandler() {
     fun handleColivingException(ex: ColivingException, request: WebRequest) :
             ResponseEntity<Any>{
         return ResponseEntity(ex.errors, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(value = [StorageItemNotExistsException::class])
+    fun handleStorageItemNotExistsException(ex: StorageItemNotExistsException, request: WebRequest) :
+            ResponseEntity<Any>{
+        return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 
 }

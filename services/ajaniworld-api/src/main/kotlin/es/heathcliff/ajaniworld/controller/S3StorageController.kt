@@ -2,8 +2,10 @@ package es.heathcliff.ajaniworld.controller
 
 import es.heathcliff.ajaniworld.constants.EndpointMappings
 import es.heathcliff.ajaniworld.constants.SecurityPolicies
+import es.heathcliff.ajaniworld.model.storage.StorageItemCreation
 import es.heathcliff.ajaniworld.service.S3StorageService
 import io.honeycomb.beeline.tracing.Beeline
+import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
@@ -21,4 +23,10 @@ class S3StorageController(private var s3StorageService: S3StorageService,
     @PreAuthorize(SecurityPolicies.ALLOW_ONLY_ADMIN)
     @GetMapping("/items")
     fun getObject(@RequestParam key: String) = s3StorageService.getObject(key)
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/items")
+    fun putObject(@RequestBody storageItemCreation: StorageItemCreation){
+        s3StorageService.putObject(storageItemCreation)
+    }
 }
