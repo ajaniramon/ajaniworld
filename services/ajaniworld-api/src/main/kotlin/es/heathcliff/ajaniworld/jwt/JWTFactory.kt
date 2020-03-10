@@ -23,7 +23,7 @@ import kotlin.collections.HashMap
 
 @Service
 class JWTFactory {
-    private val expiration: Long = 100L
+    private val expiration: Long = 12L
     private val header = "Authorization"
     private val objectMapper: ObjectMapper = ObjectMapper()
 

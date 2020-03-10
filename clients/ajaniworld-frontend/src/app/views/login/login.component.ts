@@ -29,6 +29,7 @@ export class LoginComponent {
       this.spinner.hide();
       if (resp.success && resp.admin) {
           localStorage.setItem('auth_id', resp.token);
+          localStorage.setItem('issued_at', Date.now().toString());
           this.router.navigateByUrl('dashboard');
       } else {
           this.showErrorMessage = true;

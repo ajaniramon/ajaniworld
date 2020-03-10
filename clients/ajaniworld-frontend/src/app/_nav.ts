@@ -28,5 +28,10 @@ export const navItems: INavData[] = [
     name: 'Users',
     url: '/coliving/users',
     icon: 'icon-people'
+  },
+  {
+    name: 'Spaces',
+    url: '/coliving/spaces',
+    icon: 'icon-home'
   }
 ];

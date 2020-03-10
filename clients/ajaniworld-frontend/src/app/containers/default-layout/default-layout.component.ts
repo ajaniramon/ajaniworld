@@ -14,6 +14,7 @@ export class DefaultLayoutComponent implements OnInit {
   public router: Router;
   usersService: UsersService;
 
+
   currentUser: User;
 
   constructor(router: Router, usersService: UsersService) {
@@ -24,9 +25,8 @@ export class DefaultLayoutComponent implements OnInit {
 
   ngOnInit(): void {
     const authToken = localStorage.getItem('auth_id');
-
-    if (!authToken) {
-      this.router.navigateByUrl('login');
+    if (!authToken || !this.checkTokenExpiration()) {
+      this.logout();
     } else {
         this.usersService.getCurrentUser().subscribe((resp: User) => {
           this.currentUser = resp;
@@ -38,9 +38,27 @@ export class DefaultLayoutComponent implements OnInit {
     this.sidebarMinimized = e;
   }
 
+  checkTokenExpiration() : Boolean{
+    const TWELVE_HOURS : number = 720 * 60 * 3600;
+    const issuedAtItem = localStorage.getItem('issued_at');
+
+    if(!issuedAtItem){
+      return false;
+    }
+
+    const lastValidDate : Date = new Date(parseInt(issuedAtItem + TWELVE_HOURS));
+    const now : Date = new Date(Date.now());
+
+    if(lastValidDate > now){
+      return false;
+    }
+
+    return true;
+  }
+
   logout() {
     // TODO: Logout user
-    this.router.navigateByUrl('login');
     localStorage.removeItem('auth_id');
+    this.router.navigateByUrl('login');
   }
 }

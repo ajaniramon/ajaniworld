@@ -26,7 +26,7 @@ export class CreateCountryComponent implements OnInit {
     this.spinner = spinner;
 
     this.form = this.formBuilder.group({
-      name: new FormControl('', [Validators.required]),
+      name: new FormControl(this.country.name, [Validators.required]),
       file: new FormControl('', [Validators.required])
     });
   }
@@ -59,4 +59,6 @@ export class CreateCountryComponent implements OnInit {
 
     myReader.readAsDataURL(file);
   }
+
+  get name() { return this.form.get('name') }
 }

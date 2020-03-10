@@ -5,6 +5,7 @@ import { CreateCountryComponent } from './countries/create-country/create-countr
 import {StatesComponent} from './states/states.component';
 import { UsersComponent } from './users/users.component';
 import { CreateUserComponent } from './users/create-user/create-user.component';
+import { SpacesComponent } from './spaces/spaces.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,13 @@ const routes: Routes = [
         component: CreateUserComponent,
         data: {
           title: 'Users'
+        }
+      },
+      {
+        path: 'spaces',
+        component: SpacesComponent,
+        data: {
+          title: 'Spaces'
         }
       }
     ]

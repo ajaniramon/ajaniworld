@@ -1,5 +1,6 @@
 package es.heathcliff.ajaniworld.domain.model
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import es.heathcliff.ajaniworld.domain.AbstractBaseEntity
 import java.util.*
 import javax.persistence.*
@@ -17,5 +18,11 @@ class Space(id: String?,
             var zipCode: String,
             @ManyToOne
             @JoinColumn(name = "stateId")
-            var state: State
+            var state: State,
+            @OneToMany(mappedBy="space")
+            var images: MutableList<SpaceImage>,
+
+            @OneToOne
+            @JoinColumn(name="starredImageId", referencedColumnName = "id")
+            var starredImage: SpaceImage?
             ) : AbstractBaseEntity(id)

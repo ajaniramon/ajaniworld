@@ -10,7 +10,6 @@ class SpaceImage (
     @ManyToOne
     @JoinColumn(name="spaceId")
     val space: Space,
-    @Lob
-    @Column(columnDefinition = "image")
-    val image : ByteArray
+    @Column(name = "image", length = 255, nullable = false)
+    val image : String
 ) : AbstractBaseEntity(id)

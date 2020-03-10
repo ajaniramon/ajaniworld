@@ -11,9 +11,10 @@ import { CreateCountryComponent } from './countries/create-country/create-countr
 import { UsersComponent } from './users/users.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CreateUserComponent } from './users/create-user/create-user.component';
+import { SpacesComponent } from './spaces/spaces.component';
 
 @NgModule({
-  declarations: [CountriesComponent, StatesComponent, CreateCountryComponent, UsersComponent, CreateUserComponent],
+  declarations: [CountriesComponent, StatesComponent, CreateCountryComponent, UsersComponent, CreateUserComponent, SpacesComponent],
   imports: [
     CommonModule,
     DataTablesModule,
