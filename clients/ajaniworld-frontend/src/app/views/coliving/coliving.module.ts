@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CreateCountryComponent } from './countries/create-country/create-country.component';
 import { UsersComponent } from './users/users.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { LightboxModule } from 'ngx-lightbox';
 import { CreateUserComponent } from './users/create-user/create-user.component';
 import { SpacesComponent } from './spaces/spaces.component';
 
@@ -20,6 +21,7 @@ import { SpacesComponent } from './spaces/spaces.component';
     DataTablesModule,
     FormsModule,
     ReactiveFormsModule,
+    LightboxModule,
     ColivingRoutingModule,
     NgbModule,
     NgxSpinnerModule

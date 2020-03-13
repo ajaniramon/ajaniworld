@@ -1,5 +1,90 @@
-<ngx-spinner bdOpacity=0.4 bdColor="rgba(51,51,51,0.34)" size="small" color="#fff" type="ball-spin" [fullScreen]="true">
-  <p style="color: white"> Loading... </p>
+<ngx-spinner
+  bdOpacity="0.4"
+  bdColor="rgba(51,51,51,0.34)"
+  size="small"
+  color="#fff"
+  type="ball-spin"
+  [fullScreen]="true"
+>
+  <p style="color: white">Loading...</p>
 </ngx-spinner>
 
-<h1>spaces works!</h1>
+<div>
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-align-justify"></i>
+      Spaces
+    </div>
+    <div class="card-body">
+      <div class="text-left">
+        <button type="button" class="btn btn-success">
+          <i class="icon-plus"></i> New
+        </button>
+      </div>
+      <br />
+      <br />
+      <table
+        datatable
+        [dtOptions]="dtOptions"
+        [dtTrigger]="dtTrigger"
+        class="table striped"
+      >
+        <thead>
+          <tr>
+            <th>Preview</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Zip code</th>
+            <th>State</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let space of spaces; let i = index">
+            <td>
+              <img
+                *ngIf="space.starredImage"
+                class="img-thumbnail starred-image"
+                (click)="open(i)"
+                src="{{ space.starredImage.image }}"
+              />
+              <img
+                *ngIf="!space.starredImage"
+                class="img-avatar"
+                src="../../../../assets/img/avatars/avatar-placeholder.png"
+              />
+            </td>
+            <td>
+              {{ space.name }}
+            </td>
+            <td>{{ space.address }}</td>
+            <td>{{ space.city }}</td>
+            <td>{{ space.zipCode }}</td>
+            <td>{{ space.state.name }}</td>
+            <td>
+              <button type="button" class="btn btn-danger">
+                <i class="icon-trash"></i>
+              </button>
+              <!-- Example single danger button -->
+              <div class="btn-group">
+                <button
+                  type="button"
+                  class="btn btn-success dropdown-toggle"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="icon-options"></i>
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#">Add images</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

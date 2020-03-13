@@ -2,10 +2,11 @@ import {SpaceImage} from  './space-image';
 import { State } from './state';
 
 export class Space {
-  id: String;
-  address: String;
-  city: String;
-  zipCode: String;
-  state: State;
+  id: string;
+  name: string;
+  address: string;
+  city: string;
+  zipCode: string;
+  state: string;
   starredImage: SpaceImage;
 }

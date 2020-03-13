@@ -20,7 +20,7 @@ class S3StorageService(@Value("\${ajaniworld.storage.s3.accessKey}") private var
                        @Value("\${ajaniworld.storage.s3.secretKey}") private var secretKey: String) {
 
     private val s3Client: AmazonS3 = AmazonS3ClientBuilder.standard()
-            .withRegion(Regions.US_EAST_2)
+            .withRegion(Regions.EU_WEST_3)
             .withCredentials(AWSStaticCredentialsProvider(BasicAWSCredentials(accessKey, secretKey)))
             .build()
 
@@ -31,9 +31,9 @@ class S3StorageService(@Value("\${ajaniworld.storage.s3.accessKey}") private var
         return s3Client.listObjects(listObjectsRequest)
     }
 
-    fun getObject(key: String) : StorageItem {
-        if(s3Client.doesObjectExist(Constants.AJANIWORLD_DEFAULT_S3_BUCKET, key)){
-            val s3Object =  s3Client.getObject(GetObjectRequest(Constants.AJANIWORLD_DEFAULT_S3_BUCKET, key))
+    fun getObject(bucketName: String, key: String) : StorageItem {
+        if(s3Client.doesObjectExist(bucketName, key)){
+            val s3Object =  s3Client.getObject(GetObjectRequest(bucketName, key))
             val objectMetadata = s3Object.objectMetadata
 
             return StorageItem(s3Object.key, objectMetadata.contentType, objectMetadata.lastModified,
@@ -43,7 +43,7 @@ class S3StorageService(@Value("\${ajaniworld.storage.s3.accessKey}") private var
         }
     }
 
-    fun putObject(storageItemCreation: StorageItemCreation) {
+    fun putObject(bucketName: String, storageItemCreation: StorageItemCreation) {
         val byteArrayInputStream = ByteArrayInputStream(storageItemCreation.content)
 
         val objectMetadata = ObjectMetadata()
@@ -51,7 +51,7 @@ class S3StorageService(@Value("\${ajaniworld.storage.s3.accessKey}") private var
         objectMetadata.contentLength = storageItemCreation.content.size.toLong()
         objectMetadata.contentType = storageItemCreation.mimeType
 
-        val putObjectRequest = PutObjectRequest(Constants.AJANIWORLD_DEFAULT_S3_BUCKET,
+        val putObjectRequest = PutObjectRequest(bucketName,
                 storageItemCreation.s3Key, byteArrayInputStream, objectMetadata)
 
         s3Client.putObject(putObjectRequest)

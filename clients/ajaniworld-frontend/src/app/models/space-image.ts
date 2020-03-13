@@ -1,4 +1,4 @@
 export class SpaceImage {
-  id: String;
-  image: String;
+  id: string;
+  image: string;
 }

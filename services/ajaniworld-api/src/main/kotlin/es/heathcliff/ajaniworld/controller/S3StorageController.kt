@@ -1,5 +1,6 @@
 package es.heathcliff.ajaniworld.controller
 
+import es.heathcliff.ajaniworld.constants.Constants
 import es.heathcliff.ajaniworld.constants.EndpointMappings
 import es.heathcliff.ajaniworld.constants.SecurityPolicies
 import es.heathcliff.ajaniworld.model.storage.StorageItemCreation
@@ -22,12 +23,12 @@ class S3StorageController(private var s3StorageService: S3StorageService,
 
     @PreAuthorize(SecurityPolicies.ALLOW_ONLY_ADMIN)
     @GetMapping("/items")
-    fun getObject(@RequestParam key: String) = s3StorageService.getObject(key)
+    fun getObject(@RequestParam key: String) = s3StorageService.getObject(Constants.AJANIWORLD_DEFAULT_S3_BUCKET, key)
 
     @PreAuthorize(SecurityPolicies.ALLOW_ONLY_ADMIN)
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/items")
     fun putObject(@RequestBody storageItemCreation: StorageItemCreation){
-        s3StorageService.putObject(storageItemCreation)
+        s3StorageService.putObject(Constants.COLIVING_SPACES_S3_BUCKET, storageItemCreation)
     }
 }

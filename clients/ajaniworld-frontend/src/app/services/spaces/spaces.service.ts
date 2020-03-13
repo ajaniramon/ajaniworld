@@ -13,6 +13,6 @@ export class SpacesService {
    }
 
    getSpaces(){
-     this.httpClient.get(ApiConfig.baseUrl + '/spaces');
+     return this.httpClient.get(ApiConfig.baseUrl + '/spaces');
    }
 }
